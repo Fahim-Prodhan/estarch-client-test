@@ -71,7 +71,7 @@ export default function ExtraSection1() {
 
     useEffect(() => {
         if (extraSection?.type1 === 'Category') {
-            axios.get(`${baseUrl}/api/products/products/category/products/${encodeURIComponent(extraSection?.name1)}`)
+            axios.get(`${baseUrl}/api/products/products/category/products/home/${encodeURIComponent(extraSection?.name1)}`)
                 .then(res => {
                     setProducts(res.data)
                 })

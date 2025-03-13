@@ -9,6 +9,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { openProductModal } from "@/lib/slices/productModalSlice";
 import ProductModal from "@/components/ProductModal/page";
+import { ScaleLoader } from "react-spinners";
 
 const CategoryProduct = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
@@ -20,8 +21,9 @@ const CategoryProduct = () => {
     const [sortBy, setSortBy] = useState('Sort by Serial');
     const [index, setIndex] = useState(20)
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true);
-
+    const [loading, setLoading] = useState(false);
+    const [skeletonLoading, setSkeletonLoading] = useState(false);
+    const [page, setPage] = useState(1);
     const { catName } = useParams()
     const { category } = useParams()
 
@@ -38,6 +40,7 @@ const CategoryProduct = () => {
     // Fetch products from the backend
     useEffect(() => {
         setLoading(true);
+        setSkeletonLoading(true)
         const selectedCategory = products[0]?.selectedCategory;
 
         const fetchProducts = async () => {
@@ -63,6 +66,14 @@ const CategoryProduct = () => {
                 const delimiter = url.includes('?') ? '&' : '?';
                 url += `${delimiter}sizes=${encodeURIComponent(sizesQuery)}`;
             }
+            if (page > 0) {
+                const delimiter = url.includes('?') ? '&' : '?';
+                url += `${delimiter}page=${page}`;
+            }
+            
+            if(page>1){
+                setSkeletonLoading(false)
+            }
 
             // Add sortBy to the query string
             const delimiter = url.includes('?') ? '&' : '?';
@@ -73,10 +84,12 @@ const CategoryProduct = () => {
                 const data = await response.json();
                 setProducts(data);
                 extractUniqueSizes(data); // Extract unique sizes from products
+                setLoading(false);
             } catch (error) {
                 console.error("Error fetching products:", error);
-            } finally {
                 setLoading(false);
+            }finally{
+                setSkeletonLoading(false)
             }
         };
 
@@ -94,7 +107,7 @@ const CategoryProduct = () => {
         fetchSubcategories();
 
         fetchProducts();
-    }, [selectedRanges, selectedSubcategories, selectedSizes, sortBy, products[0]?.selectedCategory]);
+    }, [selectedRanges, selectedSubcategories, selectedSizes, sortBy, products[0]?.selectedCategory,page]);
 
     // Sort
     const handleSortChange = (e) => {
@@ -161,6 +174,27 @@ const CategoryProduct = () => {
             <div className="h-4 w-96"></div>
         </div>
     );
+
+    
+
+    useEffect(() => {
+        const handleScroll = () => {
+            // Calculate the scroll percentage
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const totalHeight = document.documentElement.scrollHeight;
+            const scrollPercentage = (scrollPosition / totalHeight) * 100;
+
+            // Check if the user has scrolled to 70% of the page
+            if (scrollPercentage >= 30) {
+                setPage(page + 1); // Load more products by incrementing the page
+            }
+        };
+
+        if (!loading) {
+            window.addEventListener('scroll', handleScroll);
+        }
+        return () => window.removeEventListener('scroll', handleScroll); // Clean up event listener
+    }, [loading, page]);
 
     return (
         <div className="mx-4 lg:mx-12 mt-5 mb-8">
@@ -229,9 +263,10 @@ const CategoryProduct = () => {
                 <div className="drawer-content flex flex-col items-start justify-start">
                     {/* Products */}
                     <div className="col-span-10 gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-                        {loading
-                            ? Array.from({ length: 8 }).map((_, idx) => <SkeletonCard key={idx} />)
-                            : products.slice(0, index).map((product) => (
+                        {
+                            skeletonLoading
+                            ? Array.from({ length: 8 }).map((_, idx) => <SkeletonCard key={idx} />):
+                        products.map((product) => (
                                 <div
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none relative border-2 border-base-200 hover:border-blue-300"
@@ -275,7 +310,7 @@ const CategoryProduct = () => {
                                 </div>
                             </div>
                             ))}
-                        <div className="place-self-center md:col-span-4 col-span-2">
+                        {/* <div className="place-self-center md:col-span-4 col-span-2">
                             <button
                                 onClick={() => setIndex(index + 20)}
                                 className={`btn flex items-center gap-1 btn-sm btn-primary text-white ${products.length <= index ? "hidden" : "grid"
@@ -283,7 +318,17 @@ const CategoryProduct = () => {
                             >
                                 SEE MORE
                             </button>
-                        </div>
+                        </div> */}
+                    </div>
+                    <div className="flex justify-center items-center w-full mt-5">
+                        {
+                            loading && <ScaleLoader
+                                color="#060606"
+                                height={24}
+                                radius={3}
+                                width={5}
+                            />
+                        }
                     </div>
                 </div>
 

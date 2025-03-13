@@ -17,7 +17,9 @@ export default function Checkout() {
   const [shippingCharge, setShippingCharge] = useState(null);
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [couponType, setCouponType] = useState('')
+  const [couponDiscount, setCouponDiscount] = useState(0)
 
 
   const [formData, setFormData] = useState({
@@ -26,7 +28,8 @@ export default function Checkout() {
     area: '',
     address: '',
     orderNotes: '',
-    paymentMethod: ''
+    paymentMethod: '',
+    couponCode: '',
   });
 
   const handleAreaChange = (e) => {
@@ -50,9 +53,9 @@ export default function Checkout() {
 
   const calculateTotal = () => {
     if (typeof window === 'undefined') {
-      return calculateSubtotal() + (shippingCharge || 0);
+      return calculateSubtotal() + (shippingCharge || 0) - couponDiscount;
     }
-    return calculateSubtotal() + (shippingCharge || 0);
+    return calculateSubtotal() + (shippingCharge || 0) - couponDiscount;
   };
 
 
@@ -65,10 +68,12 @@ export default function Checkout() {
 
   const handleDecrease = (id) => {
     dispatch(decreaseQuantity(id));
+    setCouponDiscount(0)
   };
 
   const handleIncrease = (id) => {
     dispatch(increaseQuantity(id));
+    setCouponDiscount(0)
   };
 
   const handleRemoveItem = (id) => {
@@ -94,6 +99,10 @@ export default function Checkout() {
       })),
       paymentMethod: paymentMethod,
       userId: userId,
+      coupon: {
+        name: formData.couponCode,
+        discountAmount: couponDiscount,
+      },
     };
 
 
@@ -107,6 +116,37 @@ export default function Checkout() {
     }
 
     setLoading(false)
+  };
+
+  const handleApplyCoupon = async () => {
+    if (!formData.couponCode) return;
+
+    try {
+      const response = await fetch(`${baseUrl}/api/coupons/apply`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          couponName: formData.couponCode,
+          cartTotal: calculateTotal()  // Send the current total to the backend for validation
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        const { discountAmount, discountType } = data;
+        setCouponDiscount(discountAmount);  // Set the coupon discount
+        setCouponType(discountType);  // Store the type of discount (fixed or percentage)
+        alert('Coupon applied successfully!');
+      } else {
+        alert(data.message || 'Invalid coupon code');
+      }
+    } catch (error) {
+      console.error('Error applying coupon:', error);
+      alert('There was an error applying the coupon');
+    }
   };
 
   useEffect(() => {
@@ -224,6 +264,28 @@ export default function Checkout() {
                   onChange={handleChange}
                 ></textarea>
               </div>
+              {/* New coupon field */}
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2" htmlFor="couponCode">Got any Coupon Code?</label>
+                <div className="flex items-center">
+                  <input
+                    className="input input-bordered"
+                    type="text"
+                    id="couponCode"
+                    name="couponCode"
+                    value={formData.couponCode}
+                    onChange={handleChange}
+                    placeholder="Enter coupon code"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyCoupon}
+                    className="ml-2 px-4 py-2 bg-blue-500 text-white rounded"
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">Payment Method:</label>
                 <div className="mb-2">
@@ -249,7 +311,7 @@ export default function Checkout() {
                   </button> :
                     <button
                       type="submit"
-                      className="bg-black text-white px-6 py-3 rounded-lg hover:bg-orange-800 transition duration-200"
+                      className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-800 transition duration-200"
                     >
                       Place Order
                     </button>
@@ -308,6 +370,13 @@ export default function Checkout() {
               <div className="flex justify-between">
                 <span>Shipping Charge</span>
                 <span>৳ {shippingCharge}</span>
+              </div>
+            )}
+
+            {couponDiscount > 0 && (
+              <div className="flex justify-between">
+                <span>Coupon Discount</span>
+                <span>৳ {couponDiscount}</span>
               </div>
             )}
             <hr className='my-1' />

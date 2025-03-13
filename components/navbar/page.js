@@ -42,9 +42,7 @@ export default function NavBar() {
       try {
         const response = await fetch(`${baseUrl}/api/products/navbar-search`);
         const data = await response.json();
-        setProducts(data);
-        console.log(data);
-        
+        setProducts(data); 
       } catch (error) {
         console.error('Error fetching products:', error);
       }

@@ -165,6 +165,10 @@ export default function OrderStatus() {
                 <p className="text-sm font-semibold ">Delivery Charge</p>
                 <p className="text-sm font-semibold">৳ {order?.deliveryCharge}</p>
               </div>
+            {order?.coupon?.discountAmount > 0 && <div className="flex justify-end  mb-2">
+              <p className="text-sm font-semibold ">Coupon Discount</p>
+              <p className="text-sm font-semibold">৳ {order?.coupon?.discountAmount}</p>
+            </div>}
               <div className="flex justify-end  mb-2">
                 <p className="text-sm font-semibold ">Order Total</p>
                 <p className="text-sm font-semibold ">৳ {order?.grandTotal}</p>
