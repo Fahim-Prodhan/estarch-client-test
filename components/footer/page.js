@@ -112,10 +112,11 @@ export default function Footer() {
               Information
             </h6>
             <ul className="text-white">
-              <li className="mb-2">About Us</li>
-              <li className="mb-2">Privacy Policy</li>
-              <li className="mb-2">Terms & Conditions</li>
-              <li className="mb-2">Return Policy</li>
+              <li className="mb-2"><Link href="/about-us">About Us</Link></li>
+              <li className="mb-2"><Link href='/privacy-policy'>Privacy Policy</Link></li>
+              <li className="mb-2"><Link href='/terms-conditions'>Terms & Conditions</Link></li>
+              <li className="mb-2"><Link href='/return-policy'>Return Policy</Link></li>
+              <li className="mb-2"><Link href='/location'>Location</Link></li>
             </ul>
           </nav>
           <nav className="mb-8 lg:mb-0 lg:w-1/3 w-full items-center text-center flex flex-col justify-center">
@@ -135,20 +136,7 @@ export default function Footer() {
               
             </p>
           </nav>
-
         </footer>
-
-        <div className="py-4">
-          <div className="mx-auto flex items-center justify-center">
-            <Image
-              src={bank_payment_logo}
-              alt="Bank Payment Logo"
-              width={1500}
-              height={48}
-              className=" p-1 rounded"
-            />
-          </div>
-        </div>
       </div>
     </div>
   )
