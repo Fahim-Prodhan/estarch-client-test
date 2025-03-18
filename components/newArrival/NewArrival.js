@@ -88,7 +88,7 @@ export default function NewArrival() {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
   };
   const navigateToPage = (url) => {
-    window.location.href = url; 
+    window.location.href = url;
   };
   return (
     <div>
@@ -106,16 +106,17 @@ export default function NewArrival() {
               <div key={product?._id} className="card bg-base-100 shadow-md rounded-none">
                 <div className='cursor-pointer' onClick={() => navigateToPage(`/product/${product?.productName}?sku=${product?.SKU}`)} >
                   <div>
-                    <figure className='relative'>
+                    <figure className="relative overflow-hidden group">
                       <Image
                         src={`${baseUrl}/${product.images[0]}`}
                         width={320}
                         height={400}
                         priority={index === 0}
                         alt={product.productName}
-                        sizes='(max-width: 640px) 60vw, (max-width: 768px) 60vw, (max-width: 1024px) 800vw, 100vw'
+                        sizes="(max-width: 640px) 60vw, (max-width: 768px) 60vw, (max-width: 1024px) 800vw, 100vw"
+                        className="transition-transform duration-300 ease-in-out group-hover:scale-110"
                       />
-                      <p className='absolute top-2 bg-error text-white left-2 px-2 rounded-md'>New</p>
+                      <p className="absolute top-2 bg-error text-white left-2 px-2 rounded-md">New</p>
                     </figure>
                     <div className="pt-1 px-6">
                       <h2 className="md:text-[17px] text-[14px] font-bold text-center whitespace-nowrap overflow-hidden text-ellipsis">

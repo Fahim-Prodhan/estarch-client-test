@@ -118,16 +118,18 @@ export default function ExtraSection1() {
                             key={product._id}
                             className="card card-compact bg-base-200 shadow-none  rounded-none relative border-2 border-base-200 hover:border-blue-300"
                         >
-                            <div  className='cursor-pointer' onClick={() => navigateToPage(`/product/${product?.productName}?sku=${product?.SKU}`)}>
-                                <figure>
+                            <div className='cursor-pointer' onClick={() => navigateToPage(`/product/${product?.productName}?sku=${product?.SKU}`)}>
+                                <figure className="relative overflow-hidden group">
                                     <Image
                                         src={`${baseUrl}/${product.images[0]}`}
                                         width={320}
                                         height={400}
                                         priority={index === 0}
                                         alt={product.productName}
-                                        sizes='(max-width: 640px) 60vw, (max-width: 768px) 60vw, (max-width: 1024px) 800vw, 100vw'
+                                        sizes="(max-width: 640px) 60vw, (max-width: 768px) 60vw, (max-width: 1024px) 800vw, 100vw"
+                                        className="transition-transform duration-300 ease-in-out group-hover:scale-110"
                                     />
+                                    <p className="absolute top-2 bg-error text-white left-2 px-2 rounded-md">New</p>
                                 </figure>
                                 <div className="pt-1 lg:px-6 px-2">
                                     <h2 className="md:text-[15px] text-[12px] font-bold text-center whitespace-nowrap overflow-hidden text-ellipsis">

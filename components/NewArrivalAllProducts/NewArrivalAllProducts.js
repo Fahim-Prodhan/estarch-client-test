@@ -239,10 +239,17 @@ const NewArrivalAllProducts = () => {
                                 className="card card-compact bg-base-200 shadow-lg rounded-none relative border-2 border-base-200 hover:border-blue-300"
                             >
                                 <div className='cursor-pointer' onClick={() => navigateToPage(`/product/${product?.productName}?sku=${product?.SKU}`)}>
-                                    <figure>
-                                        <Image sizes="30vw" src={`${baseUrl}/${product.images[0]}`} alt={product.productName} width={350}
-                                            height={400} />
+                                    <figure className="relative overflow-hidden group">
+                                        <Image
+                                            src={`${baseUrl}/${product.images[0]}`}
+                                            alt={product.productName}
+                                            width={350}
+                                            height={400}
+                                            sizes="30vw"
+                                            className="transition-transform duration-300 ease-in-out group-hover:scale-110"
+                                        />
                                     </figure>
+
                                     <div className="pt-1 lg:px-6 px-2">
                                         <h2 className="md:text-[15px] text-[12px] font-bold text-center whitespace-nowrap overflow-hidden text-ellipsis">
                                             {truncateText(product.productName, product.productName.length)}
