@@ -34,6 +34,10 @@ module.exports = {
         protocol: 'https',
         hostname: 'api.showroom.estarch.com.bd',
       },
+      {
+        protocol: 'https',
+        hostname: 'estarch-server-presonal.onrender.com',
+      },
     ],
   },
 };
