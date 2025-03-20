@@ -104,7 +104,9 @@ export default function FeatureProduct() {
                 key={product._id}
                 className="card card-compact bg-base-200 shadow-none  rounded-none relative border-2 border-base-200 hover:border-blue-300"
               >
-                <div className='cursor-pointer' onClick={() => navigateToPage(`/product/${product?.productName}?sku=${product?.SKU}`)}>
+                <div className='cursor-pointer' >
+                <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
+                
                   <figure className="relative overflow-hidden group">
                     <Image
                       src={`${baseUrl}/${product.images[0]}`}
@@ -113,7 +115,7 @@ export default function FeatureProduct() {
                       priority={index === 0}
                       alt={product.productName}
                       sizes="(max-width: 640px) 60vw, (max-width: 768px) 60vw, (max-width: 1024px) 800vw, 100vw"
-                      className="transition-transform duration-300 ease-in-out group-hover:scale-110"
+                      className="transition-transform duration-500 ease-in-out group-hover:scale-125"
                     />
                     <p className="absolute top-2 bg-error text-white left-2 px-2 rounded-md">New</p>
                   </figure>
@@ -143,6 +145,7 @@ export default function FeatureProduct() {
                       )}
                     </div>
                   </div>
+                </Link>
                 </div>
                 <div className='text-center shadow-lg  w-full bottom-0'>
 

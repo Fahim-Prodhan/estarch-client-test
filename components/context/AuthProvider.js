@@ -12,7 +12,8 @@ export const useAuthContext = () => {
 export const AuthContextProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(null);
     const [loadingUser, setLoadingUser] = useState(true);
-
+    const [globalLoading, setGlobalLoading] = useState(true)
+    
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(initializeCartFromLocalStorage());
@@ -57,7 +58,7 @@ export const AuthContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ authUser, setAuthUser, loadingUser }}>
+        <AuthContext.Provider value={{ authUser, setAuthUser, loadingUser, globalLoading, setGlobalLoading }}>
             {children}
         </AuthContext.Provider>
     );

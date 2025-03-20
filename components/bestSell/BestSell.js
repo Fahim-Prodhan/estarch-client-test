@@ -109,7 +109,7 @@ export default function BestSell() {
                       priority={index === 0}
                       alt={product.productName}
                       sizes="(max-width: 640px) 60vw, (max-width: 768px) 60vw, (max-width: 1024px) 800vw, 100vw"
-                      className="transition-transform duration-300 ease-in-out group-hover:scale-110"
+                      className="transition-transform duration-500 ease-in-out group-hover:scale-125"
                     />
                     <p className="absolute top-2 bg-error text-white left-2 px-2 rounded-md">New</p>
                   </figure>

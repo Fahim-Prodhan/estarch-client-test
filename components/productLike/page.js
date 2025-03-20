@@ -42,7 +42,7 @@ const ProductCard = (product) => {
         <p className="font-bold md:text-xl text-sm hover:underline cursor-pointer"  onClick={() => navigateToPage(`/product/${product?.product.productName}?sku=${product?.product.SKU}`)}>{product.product.productName}</p>
         <p className="md:text-lg text-[14px]">Sku: <span className="font-bold">{product.product.SKU}</span></p>
         <select
-          className="border border-gray-300 rounded-md py-2 px-4 text-gray-700 w-full md:max-w-44  md:w-auto"
+          className="border border-gray-300 rounded-md py-2 px-0 lg:px-4 text-gray-700 w-full md:max-w-44  md:w-auto mt-1 lg:mt-0"
           value={selectedSize}
           onChange={handleSizeChange}
         >
@@ -54,13 +54,13 @@ const ProductCard = (product) => {
           ))}
         </select>
       </div>
-      <div className="col-span-2  md:space-y-4 space-y-9 place-self-start ">
+      <div className="col-span-2  md:space-y-4 space-y-9 place-self-start">
         <div>
           <p className="font-semibold md:text-xl">TK. {product.product.salePrice}</p>
           <p className="text-red-500 line-through md:text-xl">TK.{product.product.regularPrice}</p>
         </div>
         {selectedSize && (
-          <button onClick={handleAddToCart} className="px-3 text-xs md:text-[16px] bg-black text-white md:py-3 py-1 rounded-md">
+          <button onClick={handleAddToCart} className="px-3 text-xs md:text-[16px] bg-black text-white md:py-3 py-2 rounded-md">
             ADD TO CART
           </button>
         )}

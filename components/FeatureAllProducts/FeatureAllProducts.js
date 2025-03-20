@@ -209,7 +209,9 @@ const FeatureAllProducts = () => {
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none relative border-2 border-base-200 hover:border-blue-300"
                             >
-                                <div className='cursor-pointer' onClick={() => navigateToPage(`/product/${product?.productName}?sku=${product?.SKU}`)}>
+                                <div className='cursor-pointer'>
+                                <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
+                                
                                     <figure className="relative overflow-hidden group">
                                         <Image
                                             src={`${baseUrl}/${product.images[0]}`}
@@ -217,7 +219,7 @@ const FeatureAllProducts = () => {
                                             width={350}
                                             height={400}
                                             sizes="30vw"
-                                            className="transition-transform duration-300 ease-in-out group-hover:scale-110"
+                                            className="transition-transform duration-500 ease-in-out group-hover:scale-125"
                                         />
                                     </figure>
 
@@ -247,6 +249,7 @@ const FeatureAllProducts = () => {
                                             )}
                                         </div>
                                     </div>
+                                </Link>
                                 </div>
                                 <div className='text-center shadow-lg  w-full bottom-0'>
 

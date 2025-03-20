@@ -28,7 +28,7 @@ export default function RelatedProductsSinglePage() {
   };
   const navigateToPage = (url) => {
     window.location.href = url;
-};
+  };
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">
@@ -41,8 +41,9 @@ export default function RelatedProductsSinglePage() {
               className="card card-compact bg-base-200 shadow-lg rounded-none relative border-2 border-base-200 hover:border-blue-300"
             >
               <div className='cursor-pointer' onClick={() => navigateToPage(`/product/${product?.productName}?sku=${product?.SKU}`)}>
-                <figure>
-                  <Image sizes="30vw" src={`${baseUrl}/${product.images[0]}`} alt={product.productName} width={350}
+                <figure className='relative group'>
+                  <Image className="transition-transform duration-500 ease-in-out group-hover:scale-125"
+                    sizes="30vw" src={`${baseUrl}/${product.images[0]}`} alt={product.productName} width={350}
                     height={400} />
                 </figure>
                 <div className="pt-1 lg:px-6 px-2">

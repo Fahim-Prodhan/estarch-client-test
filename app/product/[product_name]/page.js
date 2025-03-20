@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
@@ -18,6 +18,12 @@ import parse from 'html-react-parser';
 import baseUrl from "@/components/services/baseUrl";
 import { motion } from "framer-motion";
 import './magnifier.css'
+import { AuthContext } from "@/components/context/AuthProvider";
+import {
+  TransformWrapper,
+  TransformComponent,
+  useControls
+} from "react-zoom-pan-pinch";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -36,12 +42,28 @@ const ProductDetails = () => {
   const [showLens, setShowLens] = useState(false); // Show/hide magnifier lens
   const [url, setUrl] = useState('');
 
+  const { globalLoading, setGlobalLoading } = useContext(AuthContext);
+
+  const Controls = () => {
+    const { zoomIn, zoomOut, resetTransform } = useControls();
+    return (
+      <>
+        <button onClick={() => zoomIn()}>Zoom In</button>
+        <button onClick={() => zoomOut()}>Zoom Out</button>
+        <button onClick={() => resetTransform()}>Reset</button>
+      </>
+    );
+  };
+
+
   useEffect(() => {
     const fetchProduct = async () => {
+      setGlobalLoading(true)
       try {
         const response = await axios.get(`${baseUrl}/api/products/products/product-details/${encodeURIComponent(product_name)}/${sku}`);
         setProduct(response.data);
         setMainImage(response.data?.images[0]);
+        setGlobalLoading(false)
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
@@ -171,7 +193,7 @@ const ProductDetails = () => {
 
     // Calculate the background position to center the lens on the mouse pointer
     const lensWidth = 250; // Width of the lens
-    const lensHeight = 350; // Height of the lens
+    const lensHeight = 250; // Height of the lens
     const bgX = (mouseX / width) * 100; // X position in percentage
     const bgY = (mouseY / height) * 100; // Y position in percentage
 
@@ -202,7 +224,7 @@ const ProductDetails = () => {
 
   const SkeletonLoader = () => (
     <div
-      className="w-full md:w-1/2 bg-gray-500 rounded-lg animate-pulse"
+      className="min-w-full bg-gray-500 rounded-lg animate-pulse md:min-h-[550px] min-h-[400px]"
     ></div>
   );
 
@@ -231,28 +253,34 @@ const ProductDetails = () => {
         </div>
         <div className="flex flex-col md:flex-row justify-center">
           <div className="flex flex-col md:flex-row w-full md:w-2/3 border rounded-lg p-4 relative">
-            <div className="w-full md:w-1/2">
-              <div className="magnifier-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-                {mainImage ? (
-                  <motion.img
-                    key={mainImage}
-                    width={500}
-                    height={500}
-                    src={`${baseUrl}/${mainImage}`}
-                    alt={product?.productName || "Product Image"}
-                    className="magnifier-image"
-                    style={{
-                      transform: showLens
-                        ? `scale(${zoomLevel}) translate(-${lensPosition.x}%, -${lensPosition.y}%)`
-                        : 'scale(1)',
-                    }}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                  />
-                ) : (
+            <div className="w-full md:w-1/2 min-h-96">
+              <div className="magnifier-container " onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+                {!mainImage ? (
                   <SkeletonLoader />
+                ) : (
+
+                  <TransformWrapper>
+                    <Controls />
+                    <TransformComponent>
+                      <motion.img
+                        key={mainImage}
+                        width={500}
+                        height={500}
+                        src={`${baseUrl}/${mainImage}`}
+                        alt={product?.productName || "Product Image"}
+                        className="magnifier-image"
+                        style={{
+                          transform: showLens
+                            ? `scale(${zoomLevel}) translate(-${lensPosition.x}%, -${lensPosition.y}%)`
+                            : 'scale(1)',
+                        }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                      />
+                    </TransformComponent>
+                  </TransformWrapper>
                 )}
                 {showLens && (
                   <div

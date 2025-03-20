@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { CiFilter } from "react-icons/ci";
@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { openProductModal } from "@/lib/slices/productModalSlice";
 import ProductModal from "@/components/ProductModal/page";
 import { ScaleLoader } from "react-spinners";
+import { AuthContext } from "@/components/context/AuthProvider";
 
 const CategoryProduct = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
@@ -26,6 +27,7 @@ const CategoryProduct = () => {
     const [page, setPage] = useState(1);
     const { catName } = useParams()
     const { category } = useParams()
+    const {setGlobalLoading } = useContext(AuthContext);
 
 
     const allRanges = [
@@ -39,6 +41,7 @@ const CategoryProduct = () => {
 
     // Fetch products from the backend
     useEffect(() => {
+        setGlobalLoading(true)
         setLoading(true);
         setSkeletonLoading(true)
         const selectedCategory = products[0]?.selectedCategory;
@@ -85,9 +88,13 @@ const CategoryProduct = () => {
                 setProducts(data);
                 extractUniqueSizes(data); // Extract unique sizes from products
                 setLoading(false);
+                setGlobalLoading(false)
+
             } catch (error) {
                 console.error("Error fetching products:", error);
                 setLoading(false);
+                setGlobalLoading(false)
+
             } finally {
                 setSkeletonLoading(false)
             }
@@ -104,9 +111,9 @@ const CategoryProduct = () => {
             }
         };
 
+        fetchProducts();
         fetchSubcategories();
 
-        fetchProducts();
     }, [selectedRanges, selectedSubcategories, selectedSizes, sortBy, products[0]?.selectedCategory, page]);
 
     // Sort
@@ -165,15 +172,15 @@ const CategoryProduct = () => {
     };
 
 
-    const SkeletonCard = () => (
-        <div className="flex flex-col gap-4">
-            <div className="skeleton h-56 w-full"></div>
-            <div className="skeleton h-4 w-28"></div>
-            <div className="skeleton h-4 w-full"></div>
-            <div className="skeleton h-4 w-full"></div>
-            <div className="h-4 w-96"></div>
-        </div>
-    );
+    // const SkeletonCard = () => (
+    //     <div className="flex flex-col gap-4">
+    //         <div className="skeleton h-56 w-full"></div>
+    //         <div className="skeleton h-4 w-28"></div>
+    //         <div className="skeleton h-4 w-full"></div>
+    //         <div className="skeleton h-4 w-full"></div>
+    //         <div className="h-4 w-96"></div>
+    //     </div>
+    // );
 
 
 
@@ -264,59 +271,59 @@ const CategoryProduct = () => {
                     {/* Products */}
                     <div className="col-span-10 gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
                         {
-                            skeletonLoading
-                                ? Array.from({ length: 8 }).map((_, idx) => <SkeletonCard key={idx} />) :
-                                products.map((product) => (
-                                    <div
-                                        key={product._id}
-                                        className="card card-compact bg-base-200 shadow-lg rounded-none relative border-2 border-base-200 hover:border-blue-300"
-                                    >
-                                        <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
-                                            <figure className="relative overflow-hidden group">
-                                                <Image
-                                                    src={`${baseUrl}/${product.images[0]}`}
-                                                    alt={product.productName}
-                                                    width={350}
-                                                    height={400}
-                                                    sizes="30vw"
-                                                    className="transition-transform duration-300 ease-in-out group-hover:scale-110"
-                                                />
-                                            </figure>
+                            // skeletonLoading
+                            //     ? Array.from({ length: 8 }).map((_, idx) => <SkeletonCard key={idx} />) :
+                            products.map((product) => (
+                                <div
+                                    key={product._id}
+                                    className="card card-compact bg-base-200 shadow-lg rounded-none relative border-2 border-base-200 hover:border-blue-300"
+                                >
+                                    <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
+                                        <figure className="relative overflow-hidden group">
+                                            <Image
+                                                src={`${baseUrl}/${product.images[0]}`}
+                                                alt={product.productName}
+                                                width={350}
+                                                height={400}
+                                                sizes="30vw"
+                                                className="transition-transform duration-500 ease-in-out group-hover:scale-125"
+                                            />
+                                        </figure>
 
-                                            <div className="pt-1 lg:px-6 px-2">
-                                                <h2 className="md:text-[15px] text-[12px] font-bold text-center whitespace-nowrap overflow-hidden text-ellipsis">
-                                                    {truncateText(product.productName, product.productName.length)}
-                                                </h2>
-                                                <div className='text-center'>
-                                                    <div className="">
-                                                        <p className={`bg-black text-white text-sm md:text-[14px] mt-2 md:mx-8 mx-4 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
-                                                            Save Tk. {product.regularPrice - product.salePrice}
-                                                        </p>
-                                                        {
-                                                            product.regularPrice - product.salePrice > 0 && (
-                                                                <p className='my-1 text-[16px] md:text-[20px] text-black text-center '>
-                                                                    <span>TK.</span>{product.salePrice}
-                                                                    <span className='md:text-[17px] text-sm line-through text-red-500'> Tk.{product.regularPrice}</span>
-                                                                </p>
-                                                            )
-                                                        }
-                                                    </div>
-
-                                                    {product.regularPrice - product.salePrice <= 0 && (
-                                                        <p className='my-1 text-[17px] md:text-[20px] text-black text-center bottom-8 md:bottom-10 left-14 md:left-[110px]'>
-                                                            <span className=''>TK.</span>{product.salePrice}
-                                                        </p>
-                                                    )}
+                                        <div className="pt-1 lg:px-6 px-2">
+                                            <h2 className="md:text-[15px] text-[12px] font-bold text-center whitespace-nowrap overflow-hidden text-ellipsis">
+                                                {truncateText(product.productName, product.productName.length)}
+                                            </h2>
+                                            <div className='text-center'>
+                                                <div className="">
+                                                    <p className={`bg-black text-white text-sm md:text-[14px] mt-2 md:mx-8 mx-4 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
+                                                        Save Tk. {product.regularPrice - product.salePrice}
+                                                    </p>
+                                                    {
+                                                        product.regularPrice - product.salePrice > 0 && (
+                                                            <p className='my-1 text-[16px] md:text-[20px] text-black text-center '>
+                                                                <span>TK.</span>{product.salePrice}
+                                                                <span className='md:text-[17px] text-sm line-through text-red-500'> Tk.{product.regularPrice}</span>
+                                                            </p>
+                                                        )
+                                                    }
                                                 </div>
+
+                                                {product.regularPrice - product.salePrice <= 0 && (
+                                                    <p className='my-1 text-[17px] md:text-[20px] text-black text-center bottom-8 md:bottom-10 left-14 md:left-[110px]'>
+                                                        <span className=''>TK.</span>{product.salePrice}
+                                                    </p>
+                                                )}
                                             </div>
-                                        </Link>
-                                        <div className='text-center shadow-lg  w-full bottom-0'>
-
-                                            <button onClick={() => dispatch(openProductModal(product))} className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>
-
                                         </div>
+                                    </Link>
+                                    <div className='text-center shadow-lg  w-full bottom-0'>
+
+                                        <button onClick={() => dispatch(openProductModal(product))} className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>
+
                                     </div>
-                                ))}
+                                </div>
+                            ))}
                         {/* <div className="place-self-center md:col-span-4 col-span-2">
                             <button
                                 onClick={() => setIndex(index + 20)}
