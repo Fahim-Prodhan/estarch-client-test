@@ -11,6 +11,8 @@ const TermsConditions = () => {
     const fetchFooterContent = async () => {
       try {
         const response = await axios.get(`${baseUrl}/api/footer-contents`);
+        console.log(response);
+        
         setTermsContent(response.data?.termsConditions || "No content available.");
       } catch (error) {
         console.error("Error fetching Terms & Conditions content:", error);
@@ -26,7 +28,7 @@ const TermsConditions = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}
-      <div className="relative w-full h-80 bg-cover bg-center" style={{ backgroundImage: "url('https://www.shutterstock.com/image-photo/horizontal-close-photo-african-businessman-260nw-1289842165.jpg')" }}>
+      <div className="relative w-full h-80 bg-cover bg-center" style={{ backgroundImage: "url('https://i.ibb.co.com/DPD4dyg0/horizontal-close-photo-african-businessman-260nw-1289842165.png')" }}>
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white">Terms & Conditions</h1>
         </div>
