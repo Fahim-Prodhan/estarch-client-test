@@ -12,11 +12,11 @@ const ImageModal = ({ isOpen, onClose, images, initialIndex }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-            <div className="relative bg-white p-12 rounded-lg max-w-4xl w-full">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
+            <div className="relative w-screen h-screen">
                 <button
                     onClick={onClose}
-                    className="absolute top-2 right-2 text-2xl text-gray-700 hover:text-gray-900 z-50 "
+                    className="z-50 custom-next absolute right-2 top-24 transform -translate-y-1/2 bg-white text-black p-2 rounded- text-sm"
                 >
                     &times;
                 </button>
@@ -45,12 +45,13 @@ const ImageModal = ({ isOpen, onClose, images, initialIndex }) => {
                 </Swiper>
 
                 {/* Custom Navigation Buttons */}
-                <button className="z-50 custom-prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full text-sm">
+                <button className="z-50 custom-prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-2 text-sm">
                     ◀
                 </button>
-                <button className="z-50 custom-next absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full text-sm">
+                <button className="z-50 custom-next absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded- text-sm">
                     ▶
                 </button>
+
             </div>
         </div>
     );
