@@ -36,8 +36,8 @@ export default function Footer() {
         <footer className="grid grid-cols-1 md:grid-cols-3 gap-6 text-base-content">
           {/* Logo & Contact */}
           <div className="flex flex-col items-center text-center">
-            <Image src={logo} alt="Logo" width={200} height={200} className="w-40 md:w-48" />
-            <p className="text-lg font-bold mt-2 text-[#B89579]">+8801781813939</p>
+            <Image src={logo} alt="Logo" width={200} height={200} className="w-40 md:w-64" />
+            <p className="text-lg lg:text-3xl font-bold mt-2 text-[#B89579]">+8801781813939</p>
             <p className="text-white text-sm mt-1">SUN - SAT, 10:30 AM - 10 PM</p>
             {/* Social Icons */}
             <div className="flex gap-3 mt-3">
@@ -58,8 +58,8 @@ export default function Footer() {
 
           {/* Information */}
           <nav className="text-center">
-            <h6 className="text-xl font-bold text-[#B89579] mb-3">Information</h6>
-            <ul className="text-white text-sm space-y-2">
+            <h6 className="text-xl lg:text-3xl font-bold text-[#B89579] mb-3">Information</h6>
+            <ul className="text-white text-sm lg:text-[16px] space-y-2">
               {["About Us", "Privacy Policy", "Terms & Conditions", "Return Policy", "Location"].map(
                 (item, index) => (
                   <li key={index}>
@@ -72,8 +72,8 @@ export default function Footer() {
 
           {/* Contact Info */}
           <nav className="text-center">
-            <h6 className="text-xl font-bold text-[#B89579] mb-3">Contact Info</h6>
-            <p className="text-white text-sm">
+            <h6 className="text-xl lg:text-3xl font-bold text-[#B89579] mb-3">Contact Info</h6>
+            <p className="text-white text-sm lg:text-lg">
               Shop Address - 19/A (Front gate of Masjid E Noor), Near Abul Hotel, Chowdhury Para,
               Malibag, Dhaka-1219
             </p>

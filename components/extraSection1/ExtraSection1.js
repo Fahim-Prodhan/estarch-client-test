@@ -130,7 +130,6 @@ export default function ExtraSection1() {
                                         sizes="(max-width: 640px) 60vw, (max-width: 768px) 60vw, (max-width: 1024px) 800vw, 100vw"
                                         className="transition-transform duration-500 ease-in-out group-hover:scale-125"
                                     />
-                                    <p className="absolute top-2 bg-error text-white left-2 px-2 rounded-md">New</p>
                                 </figure>
                                 <div className="pt-1 lg:px-6 px-2">
                                     <h2 className="md:text-[15px] text-[12px] font-bold text-center whitespace-nowrap overflow-hidden text-ellipsis">

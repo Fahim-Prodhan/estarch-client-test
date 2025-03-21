@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { openProductModal } from '@/lib/slices/productModalSlice';
 import ProductModal from '../ProductModal/page';
 import Image from 'next/image';
+import { AuthContext } from '../context/AuthProvider';
 
 // Skeleton component using Tailwind CSS
 const SkeletonCard = () => {
@@ -32,12 +33,15 @@ export default function NewArrival() {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const { setGlobalLoading } = useContext(AuthContext)
 
   useEffect(() => {
+    setGlobalLoading(true)
     axios.get(`${baseUrl}/api/products/home-new-arrival`)
       .then(res => {
         setProducts(res.data);
         setLoading(false);
+        setGlobalLoading(false)
       })
       .catch(err => {
         console.error('Error fetching new arrivals:', err);
@@ -104,8 +108,8 @@ export default function NewArrival() {
             ))
             : products.map((product, index) => (
               <div key={product?._id} className="card bg-base-100 shadow-md rounded-none">
-                  <div className='cursor-pointer' >
-                <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
+                <div className='cursor-pointer' >
+                  <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
                     <div>
                       <figure className="relative overflow-hidden group">
                         <Image
@@ -147,11 +151,11 @@ export default function NewArrival() {
                         </div>
                       </div>
                     </div>
-                </Link>
-                  </div>
-                  <div className='text-center'>
-                    <button onClick={() => dispatch(openProductModal(product))} className=" bg-[#1E201E] text-white w-full py-2">BUY NOW</button>
-                  </div>
+                  </Link>
+                </div>
+                <div className='text-center'>
+                  <button onClick={() => dispatch(openProductModal(product))} className=" bg-[#1E201E] text-white w-full py-2">BUY NOW</button>
+                </div>
               </div>
 
             ))}

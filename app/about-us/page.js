@@ -26,7 +26,7 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}
-      <div className="relative w-full h-80 bg-cover bg-center" style={{ backgroundImage: "url('https://scontent.fdac24-2.fna.fbcdn.net/v/t39.30808-6/480307791_122210736386236477_4605903540606993582_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=sBChQ03BflEQ7kNvgHm95g4&_nc_oc=AdgEojt6P3_Km1nBfWupW_jV1z9B-IBctBwC5dmyOSLk_H9QCDoIKYes_qlCr5AuMYQ&_nc_zt=23&_nc_ht=scontent.fdac24-2.fna&_nc_gid=AjLDysF-29PVUfMWdhjq5Tp&oh=00_AYHnji_c0hPOc_MUqZoE_15tGWcxL7WXCpKtqHYpqArCrg&oe=67D8FCFF')" }}>
+      <div className="relative w-full h-80 bg-cover bg-center" style={{ backgroundImage: "url('https://i.ibb.co.com/27CW4G92/481237989-122214759746236477-8170795039609032988-n.jpg')" }}>
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white">About Us</h1>
         </div>
