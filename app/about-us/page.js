@@ -6,17 +6,23 @@ import baseUrl from "@/components/services/baseUrl";
 const AboutUs = () => {
   const [aboutUsContent, setAboutUsContent] = useState("");
   const [loading, setLoading] = useState(true);
+  const { setGlobalLoading } = useContext(AuthContext)
+
 
   useEffect(() => {
     const fetchFooterContent = async () => {
+      setGlobalLoading(true)
       try {
         const response = await axios.get(`${baseUrl}/api/footer-contents`);
         setAboutUsContent(response.data?.aboutUs || "No content available.");
+        setGlobalLoading(false)
       } catch (error) {
         console.error("Error fetching About Us content:", error);
         setAboutUsContent("Failed to load About Us content.");
       } finally {
         setLoading(false);
+        setGlobalLoading(false)
+
       }
     };
 

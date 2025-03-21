@@ -1,22 +1,28 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import baseUrl from "@/components/services/baseUrl";
+import { AuthContext } from "@/components/context/AuthProvider";
 
 const PrivacyPolicy = () => {
   const [policyContent, setPolicyContent] = useState("");
   const [loading, setLoading] = useState(true);
+  const {setGlobalLoading} = useContext(AuthContext)
+
 
   useEffect(() => {
     const fetchFooterContent = async () => {
       try {
+        setGlobalLoading(true)
         const response = await axios.get(`${baseUrl}/api/footer-contents`);
         setPolicyContent(response.data?.privacyPolicy || "No content available.");
+        setGlobalLoading(false)
       } catch (error) {
         console.error("Error fetching Privacy Policy content:", error);
         setPolicyContent("Failed to load Privacy Policy content.");
       } finally {
         setLoading(false);
+        setGlobalLoading(false)
       }
     };
 

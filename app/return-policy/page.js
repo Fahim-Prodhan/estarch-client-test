@@ -1,22 +1,29 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import baseUrl from "@/components/services/baseUrl";
+import { AuthContext } from "@/components/context/AuthProvider";
 
 const ReturnPolicy = () => {
   const [returnPolicyContent, setReturnPolicyContent] = useState("");
   const [loading, setLoading] = useState(true);
+  const {setGlobalLoading} = useContext(AuthContext)
+
 
   useEffect(() => {
     const fetchFooterContent = async () => {
+      setGlobalLoading(true)
       try {
         const response = await axios.get(`${baseUrl}/api/footer-contents`);
         setReturnPolicyContent(response.data?.returnPolicy || "No content available.");
+        setGlobalLoading(false)
       } catch (error) {
         console.error("Error fetching Return Policy content:", error);
         setReturnPolicyContent("Failed to load Return Policy content.");
       } finally {
         setLoading(false);
+        setGlobalLoading(false)
+
       }
     };
 

@@ -1,23 +1,28 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import baseUrl from "@/components/services/baseUrl";
+import { AuthContext } from "@/components/context/AuthProvider";
 
 const TermsConditions = () => {
   const [termsContent, setTermsContent] = useState("");
   const [loading, setLoading] = useState(true);
+  const {setGlobalLoading} = useContext(AuthContext)
 
   useEffect(() => {
     const fetchFooterContent = async () => {
+      setGlobalLoading(true)
       try {
         const response = await axios.get(`${baseUrl}/api/footer-contents`);
         console.log(response);
         
         setTermsContent(response.data?.termsConditions || "No content available.");
+        setGlobalLoading(false)
       } catch (error) {
         console.error("Error fetching Terms & Conditions content:", error);
         setTermsContent("Failed to load Terms & Conditions content.");
       } finally {
+        setGlobalLoading(false)
         setLoading(false);
       }
     };
