@@ -19,11 +19,7 @@ import baseUrl from "@/components/services/baseUrl";
 import { motion } from "framer-motion";
 import './magnifier.css'
 import { AuthContext } from "@/components/context/AuthProvider";
-import {
-  TransformWrapper,
-  TransformComponent,
-  useControls
-} from "react-zoom-pan-pinch";
+import ImageModal from "@/components/zoomedImageModal/ImageModal";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -37,24 +33,30 @@ const ProductDetails = () => {
   const searchParams = useSearchParams();
   const sku = searchParams.get("sku");
   const router = useRouter();
-  const [zoomLevel, setZoomLevel] = useState(3.5); // Zoom level for magnifier
+  const [zoomLevel, setZoomLevel] = useState(3); // Zoom level for magnifier
   const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 }); // Position of the magnifier lens
   const [showLens, setShowLens] = useState(false); // Show/hide magnifier lens
   const [url, setUrl] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  const { globalLoading, setGlobalLoading } = useContext(AuthContext);
+  const { setGlobalLoading } = useContext(AuthContext);
 
-  const Controls = () => {
-    const { zoomIn, zoomOut, resetTransform } = useControls();
-    return (
-      <>
-        <button onClick={() => zoomIn()}>Zoom In</button>
-        <button onClick={() => zoomOut()}>Zoom Out</button>
-        <button onClick={() => resetTransform()}>Reset</button>
-      </>
-    );
+  // const Controls = () => {
+  //   const { zoomIn, zoomOut, resetTransform } = useControls();
+  //   return (
+  //     <div className="flex gap-4">
+  //       <button onClick={() => zoomIn()}>+</button>
+  //       <button onClick={() => zoomOut()}>-</button>
+  //       <button onClick={() => resetTransform()}>Reset</button>
+  //     </div>
+  //   );
+  // };
+
+  const handleImageClick = (index) => {
+    setSelectedImageIndex(index);
+    setIsModalOpen(true);
   };
-
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -224,7 +226,7 @@ const ProductDetails = () => {
 
   const SkeletonLoader = () => (
     <div
-      className="min-w-full bg-gray-500 rounded-lg animate-pulse md:min-h-[550px] min-h-[400px]"
+      className="min-w-full bg-gray-300 rounded-lg animate-pulse md:min-h-[550px] min-h-[400px]"
     ></div>
   );
 
@@ -254,33 +256,28 @@ const ProductDetails = () => {
         <div className="flex flex-col md:flex-row justify-center">
           <div className="flex flex-col md:flex-row w-full md:w-2/3 border rounded-lg p-4 relative">
             <div className="w-full md:w-1/2 min-h-96">
-              <div className="magnifier-container " onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+              <div className="magnifier-container hidden lg:block" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
                 {!mainImage ? (
                   <SkeletonLoader />
                 ) : (
+                  <motion.img
+                    key={mainImage}
+                    width={500}
+                    height={500}
+                    src={`${baseUrl}/${mainImage}`}
+                    alt={product?.productName || "Product Image"}
+                    className="magnifier-image"
+                    style={{
+                      transform: showLens
+                        ? `scale(${zoomLevel}) translate(-${lensPosition.x}%, -${lensPosition.y}%)`
+                        : 'scale(1)',
+                    }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                  />
 
-                  <TransformWrapper>
-                    <Controls />
-                    <TransformComponent>
-                      <motion.img
-                        key={mainImage}
-                        width={500}
-                        height={500}
-                        src={`${baseUrl}/${mainImage}`}
-                        alt={product?.productName || "Product Image"}
-                        className="magnifier-image"
-                        style={{
-                          transform: showLens
-                            ? `scale(${zoomLevel}) translate(-${lensPosition.x}%, -${lensPosition.y}%)`
-                            : 'scale(1)',
-                        }}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                      />
-                    </TransformComponent>
-                  </TransformWrapper>
                 )}
                 {showLens && (
                   <div
@@ -291,6 +288,38 @@ const ProductDetails = () => {
                       backgroundSize: `${zoomLevel * 100}%`,
                     }}
                   />
+                )}
+              </div>
+
+              <div className="lg:hidden block">
+                {!mainImage ? (
+                  <SkeletonLoader />
+                ) : (
+                  <>
+                    <motion.img
+                      key={mainImage}
+                      width={500}
+                      height={500}
+                      src={`${baseUrl}/${mainImage}`}
+                      alt={product?.productName || "Product Image"}
+                      className="magnifier-image cursor-pointer"
+                      onClick={() => handleImageClick(0)} // Open modal with the first image
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
+                    />
+                    {showLens && (
+                      <div
+                        className="magnifier-lens"
+                        style={{
+                          backgroundImage: `url(${baseUrl}/${mainImage})`,
+                          backgroundPosition: `${lensPosition.x}% ${lensPosition.y}%`,
+                          backgroundSize: `${zoomLevel * 100}%`,
+                        }}
+                      />
+                    )}
+                  </>
                 )}
               </div>
               <div className="flex mt-2 gap-2">
@@ -308,7 +337,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="w-full md:w-1/2  lg:p-4">
-              <h1 className="text-2xl font-bold">{product?.productName}</h1>
+              <h1 className="lg:text-2xl font-bold">{product?.productName}</h1>
               <p className="text-sm text-gray-600 ">SKU: {product?.SKU}</p>
               <p className="text-red-600 text-xl font-semibold">
                 {product?.regularPrice === product?.salePrice ? (
@@ -502,6 +531,12 @@ const ProductDetails = () => {
         </div>
 
         <RelatedProductsSinglePage />
+        <ImageModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        images={product?.images || []}
+        initialIndex={selectedImageIndex}
+      />
       </div>
     </>
 
