@@ -16,7 +16,7 @@ const ImageModal = ({ isOpen, onClose, images, initialIndex }) => {
             <div className="relative w-screen h-screen">
                 <button
                     onClick={onClose}
-                    className="z-[9999999] absolute right-2 top-20 transform -translate-y-1/2 bg-white text-black p-2 rounded-full text-sm"
+                    className="z-[9999999] absolute right-2 top-20 transform -translate-y-1/2 bg-red-500 text-white p-2 rounded-lg text-sm"
                 >
                     &times;
                 </button>
