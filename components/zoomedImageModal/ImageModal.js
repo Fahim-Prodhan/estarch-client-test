@@ -12,11 +12,11 @@ const ImageModal = ({ isOpen, onClose, images, initialIndex }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
+        <div className="fixed z-[999999] inset-0  flex items-center justify-center bg-black bg-opacity-90">
             <div className="relative w-screen h-screen">
                 <button
                     onClick={onClose}
-                    className="z-50 custom-next absolute right-2 top-24 transform -translate-y-1/2 bg-white text-black p-2 rounded- text-sm"
+                    className="z-[9999999] absolute right-2 top-20 transform -translate-y-1/2 bg-white text-black p-2 rounded-full text-sm"
                 >
                     &times;
                 </button>
