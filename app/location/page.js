@@ -5,7 +5,7 @@ const Location = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}
-      <div className="relative w-full h-80 bg-cover bg-center" style={{ backgroundImage: "url('https://scontent.fdac24-2.fna.fbcdn.net/v/t39.30808-6/481980433_122216819936236477_713801296121377301_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=C20wM9pq56YQ7kNvgF2pO8Q&_nc_oc=AdgjHEEtvTm5on9R-77nWzCtRnTmvDOZsE0NCwVLf73YEwm9xGSoxgheb-9dYdhmmmM&_nc_zt=23&_nc_ht=scontent.fdac24-2.fna&_nc_gid=A2ot2-_vNaHCm6f3kGzkHmg&oh=00_AYFuBstaaQnBpKbcincwnDcTgPPxgdkoypH0zxZUpBa7jQ&oe=67D922A2')" }}>
+      <div className="relative w-full h-80 bg-cover bg-center" style={{ backgroundImage: "url('https://i.ibb.co.com/Hfx7qww6/481044357-122212110230236477-9058567861746781843-n.jpg')" }}>
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white">Our Location</h1>
         </div>
