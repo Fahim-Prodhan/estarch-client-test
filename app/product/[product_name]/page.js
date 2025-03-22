@@ -358,8 +358,8 @@ const ProductDetails = () => {
               <div className="flex gap-1 items-center">
                 <p className="text-sm font-bold">Select Size :</p>
                 <div className='w-48 h-[40px] rounded-md flex justify-between '>
-                  <p className="flex gap-2 items-center cursor-pointer" onClick={() => dispatch(openSize(product?.charts))}>
-                    (<PiCoatHanger /> Size guide )
+                  <p className="flex gap-2 items-center cursor-pointer " onClick={() => dispatch(openSize(product?.charts))}>
+                    (<PiCoatHanger /> <span className="text-blue-500">Size guide</span> )
                   </p>
                 </div>
               </div>
@@ -369,7 +369,7 @@ const ProductDetails = () => {
 
                   <button
                     key={size.size}
-                    className={`border px-3 ${!size.available ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
+                    className={`border px-3 ${!size.available ? 'btn-disabled' : ''}    mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
                     onClick={() => { handleSizeClick(size.size), setWarning(false) }}
                   >
                     {size?.size}

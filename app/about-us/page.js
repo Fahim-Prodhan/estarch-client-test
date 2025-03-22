@@ -1,7 +1,8 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import baseUrl from "@/components/services/baseUrl";
+import { AuthContext } from "@/components/context/AuthProvider";
 
 const AboutUs = () => {
   const [aboutUsContent, setAboutUsContent] = useState("");
