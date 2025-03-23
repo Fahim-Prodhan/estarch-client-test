@@ -369,7 +369,8 @@ const ProductDetails = () => {
 
                   <button
                     key={size.size}
-                    className={`border px-3 ${!size.available ? 'btn-disabled' : ''}    mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
+                    disabled={!size.available}
+                    className={`border px-[14px] py-[2px] ${!size.available ? 'bg-gray-300 ' : ''}    mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
                     onClick={() => { handleSizeClick(size.size), setWarning(false) }}
                   >
                     {size?.size}
