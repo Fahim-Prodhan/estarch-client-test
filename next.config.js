@@ -47,6 +47,10 @@ module.exports = {
         hostname: 'api.main.estarch.online',
       },
       {
+        protocol: 'https',
+        hostname: 'api.estarch.com.bd',
+      },
+      {
         protocol: 'http',
         hostname: '185.227.134.170',
         port:'5000'
