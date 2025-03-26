@@ -27,7 +27,9 @@ const CategoryProduct = () => {
     const [page, setPage] = useState(1);
     const { catName } = useParams()
     const { category } = useParams()
-    const {setGlobalLoading } = useContext(AuthContext);
+    // const { setGlobalLoading } = useContext(AuthContext);
+    const [previousProduct, setPreviousProduct] = useState(null)
+    const [productLoading, setProductLoading] = useState(true);
 
 
     const allRanges = [
@@ -41,8 +43,6 @@ const CategoryProduct = () => {
 
     // Fetch products from the backend
     useEffect(() => {
-        setGlobalLoading(true)
-        setLoading(true);
         setSkeletonLoading(true)
         const selectedCategory = products[0]?.selectedCategory;
 
@@ -87,13 +87,19 @@ const CategoryProduct = () => {
                 const data = await response.json();
                 setProducts(data);
                 extractUniqueSizes(data); // Extract unique sizes from products
-                setLoading(false);
-                setGlobalLoading(false)
+                if (previousProduct == data?.products?.length) {
+                    setProductLoading(false)
+                
+                }
+                else {
+                    setPreviousProduct(data?.products?.length)
+                }
+
 
             } catch (error) {
                 console.error("Error fetching products:", error);
                 setLoading(false);
-                setGlobalLoading(false)
+                // setGlobalLoading(false)
 
             } finally {
                 setSkeletonLoading(false)
@@ -334,16 +340,16 @@ const CategoryProduct = () => {
                             </button>
                         </div> */}
                     </div>
-                    <div className="flex justify-center items-center w-full mt-5">
+                    {/* <div className="flex justify-center items-center w-full mt-5">
                         {
-                            loading && <ScaleLoader
+                            loading && productLoading && <ScaleLoader
                                 color="#060606"
                                 height={24}
                                 radius={3}
                                 width={5}
                             />
                         }
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="drawer-side h-full lg:h-screen z-[99999]">

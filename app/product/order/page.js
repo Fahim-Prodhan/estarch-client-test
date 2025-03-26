@@ -353,7 +353,9 @@ export default function Checkout() {
                     </div>
                   </div>
                   <div className='lg:col-span-3 place-self-end text-end'>
-                    <p className='line-through text-red-500'>৳ {item.product.discount + item.product.price}</p>
+                    {item.product.discount > 0 && (
+                      <p className='line-through text-red-500'>৳ {item.product.discount + item.product.price}</p>
+                    )}
                     <span className=''>৳ {item.product.price}</span>
                     <button onClick={() => handleRemoveItem(item)} className=" flex items-center justify-center underline">Remove</button>
                   </div>

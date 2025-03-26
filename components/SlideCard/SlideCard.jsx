@@ -51,12 +51,11 @@ const SlideCard = () => {
     );
   };
 
-  
+
   return (
     <div
-      className={`w-[100%] md:w-[30%] bg-base-100 shadow-2xl h-full z-[99999] p-6 fixed top-0 transition-all duration-500 ${
-        isOpen ? "right-0" : "right-[-620px] hidden"
-      }`}
+      className={`w-[100%] md:w-[30%] bg-base-100 shadow-2xl h-full z-[99999] p-6 fixed top-0 transition-all duration-500 ${isOpen ? "right-0" : "right-[-620px] hidden"
+        }`}
     >
       <p
         onClick={handleSlideCard}
@@ -99,9 +98,11 @@ const SlideCard = () => {
                     SKU: {item.product.sku}
                   </h1>
                   <p className="text-xl font-semibold">
-                    <span className="text-red-600 line-through" style={{ fontSize: "0.8em" }}>
-                      ৳ {item.product.price + item.product.discount}
-                    </span>
+                    {item.product.discount > 0 && (
+                      <span className="text-red-600 line-through" style={{ fontSize: "0.8em" }}>
+                        ৳ {item.product.price + item.product.discount}
+                      </span>
+                    )}
                     <span className="ml-2">৳ {item.product.price}</span>
                   </p>
 
@@ -130,12 +131,12 @@ const SlideCard = () => {
               <h1 className="font-bold text-xl">{calculateSubtotal()} tk</h1>
             </div>
 
-              <button
-                onClick={handleContinue}
-                className="btn bg-black text-white w-full hover:bg-black"
-              >
-                Place Order
-              </button>
+            <button
+              onClick={handleContinue}
+              className="btn bg-black text-white w-full hover:bg-black"
+            >
+              Place Order
+            </button>
           </div>
         </div>
       ) : (

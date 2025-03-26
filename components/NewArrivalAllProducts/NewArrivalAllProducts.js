@@ -15,6 +15,7 @@ import { AuthContext } from "../context/AuthProvider";
 const NewArrivalAllProducts = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
     const [products, setProducts] = useState([]);
+    const [previousProduct, setPreviousProduct] = useState(null)
     const [subcategories, setSubcategories] = useState([]);
     const [selectedSubcategories, setSelectedSubcategories] = useState([]);
     const [uniqueSizes, setUniqueSizes] = useState([]);
@@ -23,6 +24,7 @@ const NewArrivalAllProducts = () => {
     const [index, setIndex] = useState(0)
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [productLoading, setProductLoading] = useState(true);
     const dispatch = useDispatch();
     const { setGlobalLoading } = useContext(AuthContext);
 
@@ -40,7 +42,7 @@ const NewArrivalAllProducts = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true)
-            setGlobalLoading(true)
+            setGlobalLoading(false)
             let url = `${baseUrl}/api/products/new-all-products`;
 
             // Add ranges to the query string if there are selected ranges
@@ -73,14 +75,21 @@ const NewArrivalAllProducts = () => {
                 const response = await fetch(url);
                 const data = await response.json();
                 setProducts(data.products);
-                extractUniqueSizes(data.products); // Extract unique sizes from products
+                extractUniqueSizes(data.products);
+
+                if (previousProduct == data.products.length) {
+                    // setProductLoading(false)
+                }
+                else {
+                    setPreviousProduct(data.products.length)
+                }
                 setLoading(false)
-                setGlobalLoading(false)
+                // setGlobalLoading(false)
 
             } catch (error) {
                 console.error("Error fetching products:", error);
                 setLoading(false)
-                setGlobalLoading(false)
+                // setGlobalLoading(false)
 
             }
         };
@@ -299,7 +308,7 @@ const NewArrivalAllProducts = () => {
                     </div>
                     <div className="flex justify-center items-center w-full mt-5">
                         {
-                            loading && <ScaleLoader
+                            loading && productLoading && <ScaleLoader
                                 color="#060606"
                                 height={24}
                                 radius={3}

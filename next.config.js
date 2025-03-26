@@ -48,7 +48,7 @@ module.exports = {
       },
       {
         protocol: 'https',
-        hostname: 'api.estarch.com.bd',
+        hostname: 'api.estarch.online',
       },
       {
         protocol: 'http',
