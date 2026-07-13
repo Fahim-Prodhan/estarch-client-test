@@ -340,7 +340,7 @@ const CategoryProduct = () => {
                             </button>
                         </div> */}
                     </div>
-                    {/* <div className="flex justify-center items-center w-full mt-5">
+                    <div className="flex justify-center items-center w-full mt-5">
                         {
                             loading && productLoading && <ScaleLoader
                                 color="#060606"
@@ -349,7 +349,7 @@ const CategoryProduct = () => {
                                 width={5}
                             />
                         }
-                    </div> */}
+                    </div>
                 </div>
 
                 <div className="drawer-side h-full lg:h-screen z-[99999]">

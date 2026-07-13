@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
         <meta name="facebook-domain-verification" content="y920ncxfa98q1mrk0wywnz9hlfpmt3" />
       </head>
       <GoogleTagManager gtmId="GTM-WKPLL9WN" />
-      <body className={`${firaSans.className} bg-base-100`}>
+      <body suppressHydrationWarning  className={`${firaSans.className} bg-base-100`}>
         <Providers>
           <NavBar />
           <Hambarger />

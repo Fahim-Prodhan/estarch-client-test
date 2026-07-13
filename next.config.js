@@ -55,6 +55,10 @@ module.exports = {
         hostname: '185.227.134.170',
         port:'5000'
       },
+      {
+        protocol: 'https',
+        hostname: 'estarch-server-personal.vercel.app',
+      },
     ],
   },
 };
