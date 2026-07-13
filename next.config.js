@@ -59,6 +59,10 @@ module.exports = {
         protocol: 'https',
         hostname: 'estarch-server-personal.vercel.app',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
 };
