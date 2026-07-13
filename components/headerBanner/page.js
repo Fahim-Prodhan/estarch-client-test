@@ -55,7 +55,7 @@ export default function HeaderBanner() {
                   <Link href={carousel.link}>
                   <Image
                       className="overflow-hidden md:max-h-[600px] w-full"
-                      src={`${baseUrl}/${carousel.images[0]}`}
+                      src={`${carousel.images[0]}`}
                       alt={`Carousel Image ${index + 1}`}
                       width={1200}
                       height={600}

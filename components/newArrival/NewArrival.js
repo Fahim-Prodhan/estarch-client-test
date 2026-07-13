@@ -113,7 +113,7 @@ export default function NewArrival() {
                     <div>
                       <figure className="relative overflow-hidden group">
                         <Image
-                          src={`${baseUrl}/${product.images[0]}`}
+                          src={`${product.images[0]}`}
                           width={320}
                           height={400}
                           priority={index === 0}

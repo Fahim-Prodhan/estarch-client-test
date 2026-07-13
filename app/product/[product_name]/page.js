@@ -236,7 +236,7 @@ const ProductDetails = () => {
         <meta property="og:title" content={toSentenceCase(product?.productName || '')} />
         <meta property="og:description" content={cleanHtml(product?.content)} />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${baseUrl}/${product?.images[0]} `} />
+        <meta property="og:image" content={`${product?.images[0]} `} />
         <meta property="product:availability" content="in stock" />
         <meta property="product:condition" content="new" />
         <meta property="product:price:amount" content={`${product?.salePrice}`} />
@@ -264,7 +264,7 @@ const ProductDetails = () => {
                     key={mainImage}
                     width={500}
                     height={500}
-                    src={`${baseUrl}/${mainImage}`}
+                    src={`${mainImage}`}
                     alt={product?.productName || "Product Image"}
                     className="magnifier-image"
                     style={{
@@ -283,7 +283,7 @@ const ProductDetails = () => {
                   <div
                     className="magnifier-lens"
                     style={{
-                      backgroundImage: `url(${baseUrl}/${mainImage})`,
+                      backgroundImage: `url(${mainImage})`,
                       backgroundPosition: `${lensPosition.x}% ${lensPosition.y}%`,
                       backgroundSize: `${zoomLevel * 100}%`,
                     }}
@@ -300,7 +300,7 @@ const ProductDetails = () => {
                       key={mainImage}
                       width={500}
                       height={500}
-                      src={`${baseUrl}/${mainImage}`}
+                      src={`${mainImage}`}
                       alt={product?.productName || "Product Image"}
                       className="magnifier-image cursor-pointer"
                       onClick={() => handleImageClick(0)} // Open modal with the first image
@@ -313,7 +313,7 @@ const ProductDetails = () => {
                       <div
                         className="magnifier-lens"
                         style={{
-                          backgroundImage: `url(${baseUrl}/${mainImage})`,
+                          backgroundImage: `url(${mainImage})`,
                           backgroundPosition: `${lensPosition.x}% ${lensPosition.y}%`,
                           backgroundSize: `${zoomLevel * 100}%`,
                         }}
@@ -328,7 +328,7 @@ const ProductDetails = () => {
                     key={index}
                     width={120}
                     height={120}
-                    src={`${baseUrl}/${img}`}
+                    src={`${img}`}
                     alt={product?.productName}
                     className="w-20 h-30 md:w-30 md:h-30 lg:w-30 lg:h-30 object-cover cursor-pointer"
                     onClick={() => handleThumbnailClick(img)}

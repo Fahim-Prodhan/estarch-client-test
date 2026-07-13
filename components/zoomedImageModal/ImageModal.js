@@ -35,7 +35,7 @@ const ImageModal = ({ isOpen, onClose, images, initialIndex }) => {
                                 <Image
                                     height={500}
                                     width={500}
-                                    src={`${baseUrl}/${img}`}
+                                    src={`${img}`}
                                     alt={`Slide ${index + 1}`}
                                     className="w-full h-auto"
                                 />

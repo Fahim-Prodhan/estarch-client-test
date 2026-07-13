@@ -332,7 +332,7 @@ export default function Checkout() {
                   <div className=''>
                     <Image
                       className=' object-cover'
-                      src={`${baseUrl}/${item?.product?.colors[0]?.images[0]?.url}`}
+                      src={`${item?.product?.colors[0]?.images[0]?.url}`}
                       alt=""
                       width={70} // Width in pixels
                       height={70} // Height in pixels

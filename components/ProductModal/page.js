@@ -106,7 +106,7 @@ const ProductModal = () => {
           <h2 className="text-base font-semibold mb-4 italic">SKU: {selectedProduct?.SKU}</h2>
           <div className='flex justify-center'>
             <div className=" mb-4 w-36 aspect-[4/5]">
-              <Image width={300} height={300} src={`${baseUrl}/${selectedProduct?.images[0]}`} alt="Product" className="w-full h-full object-cover" />
+              <Image width={300} height={300} src={`${selectedProduct?.images[0]}`} alt="Product" className="w-full h-full object-cover" />
             </div>
           </div>
           {selectedProduct?.regularPrice - selectedProduct?.salePrice > 0 && (
@@ -165,7 +165,7 @@ const ProductModal = () => {
           <h2 className="text-lg font-semibold mb-4 text-center">{selectedProduct?.productName}</h2>
           <div className="flex">
             <div className="flex-shrink-0">
-              <Image width={300} height={300} src={`${baseUrl}/${selectedProduct?.images[0]}`} alt="Product" className="rounded-lg object-cover w-48 h-60" />
+              <Image width={300} height={300} src={`${selectedProduct?.images[0]}`} alt="Product" className="rounded-lg object-cover w-48 h-60" />
             </div>
             <div className="ml-4 flex-grow">
               <h2 className="text-base font-semibold mb-1">SKU: {selectedProduct?.SKU}</h2>

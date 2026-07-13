@@ -85,7 +85,7 @@ const SlideCard = () => {
                     <Image
                       width={80}
                       height={80}
-                      src={`${baseUrl}/${item.product.colors[0].images[0].url}`}
+                      src={`${item.product.colors[0].images[0].url}`}
                       alt={item.product.title}
                     />
                   )}

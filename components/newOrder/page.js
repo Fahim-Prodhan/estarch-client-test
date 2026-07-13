@@ -88,7 +88,7 @@ const NewOrder = () => {
                                             {/* Display the first product image */}
                                             {item.product?.images?.[0] && (
                                                 <Image
-                                                    src={`${baseUrl}/${item.product.images[0]}`} // Assuming the image path is relative
+                                                    src={`${item.product.images[0]}`} // Assuming the image path is relative
                                                     alt={item.product.productName}
                                                     width={220} height={60}
                                                 />

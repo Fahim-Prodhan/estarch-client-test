@@ -259,7 +259,7 @@ const NewArrivalAllProducts = () => {
                                     <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
                                         <figure className="relative overflow-hidden group">
                                             <Image
-                                                src={`${baseUrl}/${product.images[0]}`}
+                                                src={`${product.images[0]}`}
                                                 alt={product.productName}
                                                 width={350}
                                                 height={400}

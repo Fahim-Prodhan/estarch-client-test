@@ -48,7 +48,7 @@ export default function Man() {
                 <div className="relative flex justify-center items-center mt-5 bg-gray-100">
                     <div className="relative w-full h-[150px] lg:h-[500px] md:h-[500px]">
                         <Image
-                            src={`${baseUrl}/${categories[0]?.type?.image}`}
+                            src={`${categories[0]?.type?.image}`}
                             alt=""
                             layout="fill"
                             objectFit="cover"
@@ -69,7 +69,7 @@ export default function Man() {
                             <Image
                                 width={480}
                                 height={300}
-                                src={`${baseUrl}/${cat.image}`}
+                                src={`${cat.image}`}
                                 alt={cat.name}
                                 className="rounded-lg block w-full h-auto"
                             />

@@ -247,7 +247,7 @@ export default function NavBar() {
                 onClick={() => clickProduct(product)}
                 className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-200 text-black"
               >
-                <Image src={`${baseUrl}/${product.images[0]}`} alt='' width={20} height={20} /><span>{product.productName}</span><span>({product.SKU})</span>
+                <Image src={`${product.images[0]}`} alt='' width={20} height={20} /><span>{product.productName}</span><span>({product.SKU})</span>
               </div>
             ))
           ) : (
@@ -274,7 +274,7 @@ export default function NavBar() {
                       onClick={() => clickProduct(product)}
                       className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-200 text-black"
                     >
-                      <Image src={`${baseUrl}/${product.images[0]}`} alt={product.productName} width={20} height={20} />
+                      <Image src={`${product.images[0]}`} alt={product.productName} width={20} height={20} />
                       <span>{product.productName}</span><span>({product?.SKU})</span>
                     </div>
                   ))

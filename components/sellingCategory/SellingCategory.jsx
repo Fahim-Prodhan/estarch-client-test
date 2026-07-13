@@ -75,7 +75,7 @@ const SellingCategory = () => {
                             <Link href={`${cat?.type?.name}/${cat.name}`}>
                                 <div className="relative text-center rounded-md w-[162px] lg:w-[302px] h-[100px] lg:h-[180px]">
                                     <Image
-                                        src={`${baseUrl}/${cat.image}`}
+                                        src={`${cat.image}`}
                                         alt={cat.name}
                                         width={500}
                                         height={180}

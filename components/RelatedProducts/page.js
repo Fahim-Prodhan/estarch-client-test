@@ -43,7 +43,7 @@ export default function RelatedProductsSinglePage() {
               <div className='cursor-pointer' onClick={() => navigateToPage(`/product/${product?.productName}?sku=${product?.SKU}`)}>
                 <figure className='relative group'>
                   <Image className="transition-transform duration-500 ease-in-out group-hover:scale-125"
-                    sizes="30vw" src={`${baseUrl}/${product.images[0]}`} alt={product.productName} width={350}
+                    sizes="30vw" src={`${product.images[0]}`} alt={product.productName} width={350}
                     height={400} />
                 </figure>
                 <div className="pt-1 lg:px-6 px-2">

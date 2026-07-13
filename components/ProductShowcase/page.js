@@ -29,7 +29,7 @@ const ProductShowcase = () => {
               <Image
                 width={400}
                 height={0}
-                src={item.images[0] ? `${baseUrl}/${item.images[0]}` : '/fallback-image.jpg'} // Use baseUrl here to ensure it's a valid URL
+                src={item.images[0] ? `${item.images[0]}` : '/fallback-image.jpg'} // Use baseUrl here to ensure it's a valid URL
                 alt={item.name}
                 className="w-full h-auto"
                 sizes='(max-width: 640px) 55vw, (max-width: 768px) 50vw, (max-width: 1024px) 800vw, 100vw'
